@@ -7,4 +7,7 @@ router.use("/blogs", blogRoutes);
 const userRoutes = require("./userRoutes");
 router.use("/users", userRoutes);
 
+const frontEndRoutes = require("./frontEndRoutes");
+router.use("/", frontEndRoutes);
+
 module.exports = router;
