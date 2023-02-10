@@ -3,7 +3,7 @@ const Blog = require("../models/Blog");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    res.render("welcome");
+    res.render("login");
 })
 
 router.get("/dashboard", (req, res) => {
