@@ -25,8 +25,9 @@ router.post("/", (req, res) => {
     })
     .then(userData => {
         req.session.user_id = userData.id;
-        req.session.user_email = userData.email;
-        res.json(userData)
+        req.session.username = userData.username;
+        console.log(req.session);
+        res.json(userData);
     })
     .catch(error => {
         res.status(500).json({
@@ -48,7 +49,7 @@ router.post("/login",(req,res)=>{
      } else {
          if(bcrypt.compareSync(req.body.password,userData.password)){
              req.session.userId = userData.id;
-             req.session.userEmail = userData.email;
+             req.session.username = userData.username;
              return res.json(userData)
          } else {
              return res.status(401).json({msg:"incorrect email or password"})
@@ -59,12 +60,6 @@ router.post("/login",(req,res)=>{
      res.status(500).json({msg:"oh noes!",err})
     })
  })
-
- //DELETE route for logout
- router.get("/logout",(req,res)=>{
-    req.session.destroy();
-    res.send("logged out")
-})
 
 //GET one record by id
 router.get("/:id", (req, res) => {
