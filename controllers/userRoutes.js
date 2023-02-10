@@ -17,26 +17,6 @@ router.get("/", (req, res) => {
     })
 })
 
-//GET one record by id
-router.get("/:id", (req, res) => {
-    User.findByPk(req.params.id)
-    .then(data => {
-        if(data){
-           return res.json(data);
-        } else {
-            res.status(404).json({
-                message: "No record exists!"
-            })
-        }
-    }).catch(error => {
-        console.log(error);
-        res.status(500).json({
-            message: "Error getting data",
-            error: error
-        })
-    })
-})
-
 //POST a new record
 router.post("/", (req, res) => {
     User.create({
@@ -79,6 +59,32 @@ router.post("/login",(req,res)=>{
      res.status(500).json({msg:"oh noes!",err})
     })
  })
+
+ //DELETE route for logout
+ router.get("/logout",(req,res)=>{
+    req.session.destroy();
+    res.send("logged out")
+})
+
+//GET one record by id
+router.get("/:id", (req, res) => {
+    User.findByPk(req.params.id)
+    .then(data => {
+        if(data){
+           return res.json(data);
+        } else {
+            res.status(404).json({
+                message: "No record exists!"
+            })
+        }
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({
+            message: "Error getting data",
+            error: error
+        })
+    })
+})
 
 //UPDATE a record
 router.put("/:id", (req, res) => {
