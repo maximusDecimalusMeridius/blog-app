@@ -1,11 +1,11 @@
 //loop in dependencies
 const express = require("express");
-const Blog = require("../models/Blog");
+const User = require("../models/User");
 const router = express.Router();
 
 //GET all records
 router.get("/", (req, res) => {
-    Blog.findAll().then(data => {
+    User.findAll().then(data => {
         res.json(data);
     }).catch(error => {
         console.log(error);
@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 
 //GET one record by id
 router.get("/:id", (req, res) => {
-    Blog.findByPk(req.params.id)
+    User.findByPk(req.params.id)
     .then(data => {
         if(data){
            return res.json(data);
@@ -38,13 +38,14 @@ router.get("/:id", (req, res) => {
 
 //POST a new record
 router.post("/", (req, res) => {
-    Blog.create({
-        title: req.body.title,
-        content: req.body.content,
-        user_id: req.session.user_id
+    User.create({
+        username: req.body.username,
+        password: req.body.password
     })
-    .then(blogData => {
-        res.json(blogData);
+    .then(userData => {
+        req.session.userId = userData.id;
+        req.session.userEmail = userData.email;
+        res.json(userData)
     })
     .catch(error => {
         res.status(500).json({
@@ -56,9 +57,9 @@ router.post("/", (req, res) => {
 
 //UPDATE a record
 router.put("/:id", (req, res) => {
-    Blog.update({
-        title: req.body.title,
-        content: req.body.content
+    User.update({
+        username: req.body.title,
+        password: req.body.content
     },{
         where: {
             id:req.params.id
@@ -80,7 +81,7 @@ router.put("/:id", (req, res) => {
 
 //DELETE a record
 router.delete("/:id", (req, res) => {
-    Blog.destroy({
+    User.destroy({
         where:{
             id:req.params.id
         }
