@@ -38,6 +38,7 @@ router.get("/:id", (req, res) => {
 
 //POST a new record
 router.post("/", (req, res) => {
+    console.log(req.session);
     Blog.create({
         title: req.body.title,
         content: req.body.content,

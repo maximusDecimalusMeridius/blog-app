@@ -2,6 +2,7 @@
 const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 //GET all records
 router.get("/", (req, res) => {
@@ -43,8 +44,8 @@ router.post("/", (req, res) => {
         password: req.body.password
     })
     .then(userData => {
-        req.session.userId = userData.id;
-        req.session.userEmail = userData.email;
+        req.session.user_id = userData.id;
+        req.session.user_email = userData.email;
         res.json(userData)
     })
     .catch(error => {
@@ -54,6 +55,30 @@ router.post("/", (req, res) => {
         })
     })
 })
+
+//POST route for login
+router.post("/login",(req,res)=>{
+    User.findOne({
+    where:{
+     username: req.body.username
+    }
+    }).then(userData=>{
+     if(!userData){
+         return res.status(401).json({msg:"incorrect email or password"})
+     } else {
+         if(bcrypt.compareSync(req.body.password,userData.password)){
+             req.session.userId = userData.id;
+             req.session.userEmail = userData.email;
+             return res.json(userData)
+         } else {
+             return res.status(401).json({msg:"incorrect email or password"})
+         }
+     }
+    }).catch(err=>{
+     console.log(err);
+     res.status(500).json({msg:"oh noes!",err})
+    })
+ })
 
 //UPDATE a record
 router.put("/:id", (req, res) => {
