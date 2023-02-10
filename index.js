@@ -5,6 +5,7 @@ const app = express();
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
 const path = require('path');
+require("dotenv").config();
 const allRoutes = require("./controllers");
 
 //define express session and sequelize store with session Store key
