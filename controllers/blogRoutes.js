@@ -7,10 +7,10 @@ router.get("/", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-
+    console.log(req.session);
     Blog.create({
-        user: "test",
-        content: "test"
+        title: req.body.title,
+        content: req.body.content
     })
     .then(blogData => {
         res.json(blogData);

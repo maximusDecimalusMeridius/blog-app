@@ -20,7 +20,8 @@ User.init({
     }
 },{
     sequelize,
-    underscored:true
+    underscored:true,
+    modelName: 'user'
 });
 
 module.exports = User

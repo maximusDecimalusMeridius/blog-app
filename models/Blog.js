@@ -21,7 +21,8 @@ Blog.init({
     }
 },{
     sequelize,
-    underscored:true
+    underscored:true,
+    modelName: 'blog'
 });
 
 module.exports = Blog
