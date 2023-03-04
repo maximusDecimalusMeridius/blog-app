@@ -34,8 +34,11 @@ router.get("/home", async (req, res) => {
             return;
         }
 
-        let allBlogs = await Blog.findAll({
-            
+        let allBlogs = await Blog.findAll(
+            {
+            where: {
+                user_id: req.session.userId
+            },
             include: [User]});
         allBlogs = allBlogs.map(blog => blog.toJSON());
 

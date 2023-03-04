@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
     .then(userData => {
         req.session.user_id = userData.id;
         req.session.username = userData.username;
-        console.log(req.session);
+        // console.log(req.session);
         res.json(userData);
     })
     .catch(error => {
