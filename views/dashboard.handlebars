@@ -1,3 +1,17 @@
 <div class="page-subheader">
     <h1>Dashboard</h1>
 </div>
+
+<ul id="bloglist">
+    {{#each allBlogs}}
+        <li class="blogpost">
+            <div class="blogheader">
+                <h2>{{this.title}}</h2>
+                <div>{{this.User.username}}</div>
+            </div>
+            <div class="blogcontent">
+            {{this.content}}
+            </div>
+        </li>
+    {{/each}}
+</ul>

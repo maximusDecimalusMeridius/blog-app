@@ -1,12 +1,15 @@
 //loop in dependencies
 const express = require("express");
 const User = require("../models/User");
+const Blog = require("../models/Blog");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
 //GET all records
 router.get("/", (req, res) => {
-    User.findAll().then(data => {
+    User.findAll({
+        include: [Blog]
+    }).then(data => {
         res.json(data);
     }).catch(error => {
         console.log(error);

@@ -13,11 +13,11 @@ Blog.init({
         allowNull: false
     },
     user_id: {
-        type: DataTypes.INTEGER
-        // references: {
-        //     model: "user",
-        //     id: "id"
-        // }
+        type: DataTypes.INTEGER,
+        references: {
+            model: "User",
+            id: "id"
+        }
     }
 },{
     sequelize,

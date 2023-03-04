@@ -13,7 +13,7 @@ document.querySelector("#login").addEventListener("submit", event => {
         }
     }).then(res=>{
         if(res.ok){
-           location.href="/"
+            location.href="/home"
         } else {
             alert("Error logging in")
         }
@@ -35,7 +35,7 @@ document.querySelector("#signup").addEventListener("submit", event => {
         }
     }).then(res=>{
         if(res.ok){
-           location.href="/dashboard"
+            location.href="/home"
         } else {
             alert("trumpet sound")
         }

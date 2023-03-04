@@ -7,7 +7,7 @@ Blog.belongsTo(User, {
 });
 
 User.hasMany(Blog, {
-    foreignKey: "user_id",
+    onDelete:"CASCADE"
 });
 
 module.exports = {

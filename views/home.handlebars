@@ -1,0 +1,36 @@
+<div class="page-subheader">
+    <h1>Home</h1>
+</div>
+
+<div id="add-blog">
+    <div id="add-blog-button">Click to add a new Blog</div>
+    <div id="new-form">
+        <form id="new-blog-form">
+            <div>
+                <label for="blog-title">Title:</label><br />
+                <input type="text" name="blog-title" id="blog-title" />
+            </div>
+            <div>
+                <label for="blog-content">Body:</label><br />
+                <textarea type="text" name="blog-content" id="blog-content"></textarea>
+            </div>
+            <button type="button" id="submit-button">Submit</button>
+        </form>
+    </div>
+</div>
+
+<ul id="bloglist">
+    {{#each allBlogs}}
+        <li class="blogpost">
+            <div class="blogheader">
+                <h2>{{this.title}}</h2>
+                <div>{{this.User.username}}</div>
+            </div>
+            <div class="blogcontent">
+            {{this.content}}
+            </div>
+        </li>
+    {{/each}}
+</ul>
+
+<script src="/js/blog.js"></script>
