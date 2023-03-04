@@ -52,7 +52,11 @@ router.get("/home", async (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-    res.render("login");
+    if(!req.session.userId){
+        res.render("login");
+    } else {
+        res.status(403);
+    }
 })
 
 //DELETE route for logout

@@ -21,23 +21,28 @@ router.get("/", (req, res) => {
 })
 
 //POST a new record
-router.post("/", (req, res) => {
-    User.create({
-        username: req.body.username,
-        password: req.body.password
-    })
-    .then(userData => {
-        req.session.user_id = userData.id;
-        req.session.username = userData.username;
-        // console.log(req.session);
-        res.json(userData);
-    })
-    .catch(error => {
-        res.status(500).json({
-            message: "Error!",
-            error: error
+router.post("/", async (req, res) => {
+    try {
+        User.create({
+            username: req.body.username,
+            password: req.body.password
         })
-    })
+        .then(userData => {
+            req.session.user_id = userData.id;
+            req.session.username = userData.username;
+            // console.log(req.session);
+            res.json(userData);
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Error!",
+                error: error
+            })
+        })
+    } catch (error){
+        console.error(error);
+        res.status(500).json({msg: 'error'})
+    }
 })
 
 //POST route for login
