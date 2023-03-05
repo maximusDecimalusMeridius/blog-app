@@ -5,7 +5,9 @@ const router = express.Router();
 
 //GET all records
 router.get("/", (req, res) => {
-    Blog.findAll().then(data => {
+    Blog.findAll({
+        order: ["Blog", "id", "DESC"]
+    }).then(data => {
         res.json(data);
     }).catch(error => {
         console.log(error);

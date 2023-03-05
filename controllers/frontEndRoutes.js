@@ -2,45 +2,22 @@ const express = require("express");
 const Blog = require("../models/Blog");
 const User = require("../models/User");
 const router = express.Router();
+const sequelize = require('../config/connection');
 
-router.get("/", (req, res) => {
-    res.render("login");
-})
-
-router.get("/dashboard", async (req, res) => {
-    try {
-        if(!req.session.userId){
-            res.status(403).render("login");
-            return;
-        }
-
-        let allBlogs = await Blog.findAll({include: [User]});
+router.get("/", async (req, res) => {
+    try {   
+        let allBlogs = await Blog.findAll({
+            include: [User],
+            order: [
+                ["id", "DESC"]
+            ]
+        });
         allBlogs = allBlogs.map(blog => blog.toJSON());
-        console.log(allBlogs);
-        res.render("dashboard", {
-            allBlogs: allBlogs
-        })
-    } catch (error) {
-        console.log(error);
-    }
-    
-})
-
-router.get("/home", async (req, res) => {
-    
-    try {
-        if(!req.session.userId){
-            res.status(403).render("login");
-            return;
+        
+        for(let i = 0; i < allBlogs.length; i++){
+            allBlogs[i].formattedDate = allBlogs[i].createdAt.toLocaleDateString("en-us");
+            console.log(allBlogs[i]);
         }
-
-        let allBlogs = await Blog.findAll(
-            {
-            where: {
-                user_id: req.session.userId
-            },
-            include: [User]});
-        allBlogs = allBlogs.map(blog => blog.toJSON());
 
         res.render("home", {
             allBlogs: allBlogs
@@ -51,11 +28,45 @@ router.get("/home", async (req, res) => {
     
 })
 
+router.get("/dashboard", async (req, res) => {
+    if(!req.session.userId){
+        res.status(403).render("login");
+        return;
+    }
+
+    try {
+        let allBlogs = await Blog.findAll(
+            {
+            where: {
+                user_id: req.session.userId
+            },
+            include: [User],
+            order: [
+                ["id", "DESC"]
+            ]
+        })
+        allBlogs = allBlogs.map(blog => blog.toJSON());
+        
+        for(let i = 0; i < allBlogs.length; i++){
+            allBlogs[i].formattedDate = allBlogs[i].createdAt.toLocaleDateString("en-us");
+            console.log(allBlogs[i]);
+        }
+
+        res.render("dashboard", {
+            allBlogs: allBlogs,
+            user: req.session.username
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    
+})
+
 router.get("/login", (req, res) => {
     if(!req.session.userId){
-        res.render("login");
+        return res.render("login");
     } else {
-        res.status(403);
+        return res.status(403);
     }
 })
 

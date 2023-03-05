@@ -35,7 +35,7 @@ document.querySelector("#signup").addEventListener("submit", event => {
         }
     }).then(res=>{
         if(res.ok){
-            location.href="/home"
+            location.href="/"
         } else {
             alert("trumpet sound")
         }
