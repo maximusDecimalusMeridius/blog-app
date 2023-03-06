@@ -23,22 +23,14 @@ router.get("/", (req, res) => {
 //POST a new record
 router.post("/", async (req, res) => {
     try {
-        User.create({
+        const result = await User.create({
             username: req.body.username,
             password: req.body.password
         })
-        .then(userData => {
-            req.session.user_id = userData.id;
-            req.session.username = userData.username;
-            // console.log(req.session);
-            res.json(userData);
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Error!",
-                error: error
-            })
-        })
+        req.session.user_id = result.id;
+        req.session.username = result.username;
+        // console.log(req.session);
+        res.json(result);
     } catch (error){
         console.error(error);
         res.status(500).json({msg: 'error'})

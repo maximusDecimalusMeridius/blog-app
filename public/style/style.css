@@ -1,8 +1,10 @@
 :root {
     /* CSS HEX from coolors.co*/
-    --header-color: rgb(35, 16, 16);
-    --faded-header-color: rgb(90, 68, 68);
-    --seaweed-background: rgb(217 234 211);
+    /* --header-color: rgb(35, 16, 16); */
+    --header-color: #323232;
+    --faded-header-color: rgb(35, 16, 16);
+    --seaweed-background: rgb(193, 228, 240);
+    --light-gray-background: rgb(235, 235, 235);
 }
 
 *, *::before, *::after {
@@ -27,7 +29,7 @@ header {
     height: 75px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     background-color: var(--header-color);
 }
@@ -44,12 +46,17 @@ button {
     cursor: pointer;
 }
 
+label {
+    margin-bottom: 5px;
+}
+
 input, textarea {
     padding: 20px;
     font-family: 'Calibri'
 }
 
 #nav-menu {
+    width: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -59,12 +66,12 @@ input, textarea {
 
 #nav-menu * li {
     height: 40px;
-    width: 150px;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--seaweed-background);
-    font-size: 24px;
+    color: var(--light-gray-background);
+    font-size: 22px;
     font-weight: bold;
     font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif
 }
@@ -73,8 +80,47 @@ input, textarea {
     text-decoration: none;
 }
 
-.show {
-    display: block;
+#login-window,
+#signup-window {
+    height: 300px;
+    width: 250px;
+    margin: 20px auto;
+    position: relative;
+}
+
+#login,
+#signup {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: var(--header-color);
+    color: var(--seaweed-background);
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px var(--header-color);
+}
+
+#login-link,
+#signup-link {
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+}
+
+#login-link:hover,
+#signup-link:hover {
+    font-weight: bold;
+    cursor: pointer;
+    left: 14px;
+}
+
+#login-error,
+#signup-error {
+    color: red;
+    font: monospace;
+    font-size: 12px;
 }
 
 .page-subheader {
@@ -161,6 +207,7 @@ input, textarea {
     justify-content: center;
     align-items: center;
     list-style-type: none;
+    background: var(--light-gray-background);
 }
 
 .blogpost {
@@ -171,6 +218,7 @@ input, textarea {
     box-shadow: 4px 4px 8px var(--header-color);
     transition: all .5s ease-out;
     position: relative;
+    background: var(--seaweed-background);
 }
 
 .blogpost:first-child::before {
@@ -196,6 +244,7 @@ input, textarea {
 .blogheader h2 {
     width: fit-content;
     padding: 10px;
+    color: white;
 }
 
 .blogheader div {
@@ -213,7 +262,7 @@ input, textarea {
 
 .comment-container {
     margin: 20px;
-    padding: 20px 20px;
+    padding: 15px 15px;
     background: var(--header-color);
     color: var(--seaweed-background);
     border: 2px solid white;
@@ -233,6 +282,7 @@ input, textarea {
     width: 100%;
     margin-bottom: 15px;
     border: 1px solid var(--seaweed-background);
+    border-radius: 5px;
 }
 
 #comment-banner {
@@ -242,6 +292,7 @@ input, textarea {
     font-size: 32px;
     font-weight: bold;
     font-style: italic;
+    color: white;
 }
 
 .comment-header {
@@ -250,6 +301,7 @@ input, textarea {
     align-items: center;
     background: var(--faded-header-color);
     border: 1px solid var(--seaweed-background);
+    color: white;
 }
 
 .comment-header h2 {
@@ -267,14 +319,17 @@ input, textarea {
 
 .comment-body {
     padding: 5px;
-    background: var(--seaweed-background);
+    background: white;
     color: var(--header-color);
 }
 
 .add-comment-button,
-.submit-comment-button {
+.submit-comment-button,
+.login-button,
+.signup-button {
     height: 25px;
     width: 100px;
+    margin-top: 10px;
     background: var(--seaweed-background);
     border-radius: 5px;
     border: 1px solid black;
@@ -284,7 +339,9 @@ input, textarea {
 }
 
 .add-comment-button:hover,
-.submit-comment-button:hover {
+.submit-comment-button:hover,
+.login-button:hover,
+.signup-button:hover {
     background: var(--faded-header-color);
     color: var(--seaweed-background);
     border: 2px solid var(--seaweed-background);
@@ -293,7 +350,8 @@ input, textarea {
 }
 
 .add-comment-button:active,
-.add-submit-button:active {
+.add-submit-button:active,
+.login-button:active {
     box-shadow: inset 2px 2px 4px white,
                 inset -2px -2px 4px white;
 }
@@ -312,10 +370,27 @@ footer {
     display: none;
 }
 
+.show {
+    display: block;
+}
+
 /* media css */
 
 @media (width < 800px){
     .blogpost {
         width: 95%;
+    }
+
+    .page-subheader h1 {
+        margin: 10px auto;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    #nav-menu li {
+        font-size: 16px;
+        width: 75px;
     }
 }

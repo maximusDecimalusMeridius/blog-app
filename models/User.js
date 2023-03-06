@@ -11,6 +11,7 @@ User.init({
         validate: {
           isAlphanumeric:true,
         },
+        unique: true
     },
     password: {
         type: DataTypes.TEXT,

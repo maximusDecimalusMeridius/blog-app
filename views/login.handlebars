@@ -2,18 +2,26 @@
     <h1>The Tech Blog</h1>
 </div>
 <div class="content">
-    <form id="login">
-        <input type="text" id="username" placeholder="username">
-        <input type="password" id="password" >
-        <button>Click to Login</button>
-    </form>
-    <br><br>OR<br><br>
-    Create an account!
-    <form id="signup">
-        <input type="text" id="signupUsername" placeholder="username">
-        <input type="password" id="signupPassword" >
-        <button>Click to Create an Account!</button>
-    </form>
+    <div id="login-window">
+        <form id="login">
+            <label for="username">Enter username and password:</label>
+            <input type="text" id="username" placeholder="username">
+            <input type="password" id="password" placeholder="password">
+            <div id="login-error"></div>
+            <button class="login-button">Login</button>
+            <div id="signup-link">Click to signup!</div>
+        </form>
+    </div>
+    <div id="signup-window" class="hide">
+        <form id="signup">
+            <label for="signupUsername">Choose a username and password:</label>
+            <input type="text" id="signupUsername" placeholder="username">
+            <input type="password" id="signupPassword">
+            <div id="signup-error"></div>
+            <button class="signup-button">Create Acct</button>
+            <div id="login-link">Click to login!</div>
+        </form>
+    </div>
 </div>
 
 
