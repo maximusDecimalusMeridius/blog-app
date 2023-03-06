@@ -14,13 +14,8 @@ User.hasMany(Blog, {
 
 Blog.hasMany(Comment, {
     onDelete: "CASCADE",
-    as: "blog_id"
+    as: "comments"
 })
-
-// User.hasMany(Comment, {
-//     onDelete: "CASCADE",
-//     as: "author_id"
-// })
 
 Comment.belongsTo(User, {
     onDelete: "CASCADE",

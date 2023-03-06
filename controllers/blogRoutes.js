@@ -1,6 +1,6 @@
 //loop in dependencies
 const express = require("express");
-const Blog = require("../models/Blog");
+const {Comment, Blog} = require("../models");
 const router = express.Router();
 
 //GET all records
@@ -8,6 +8,12 @@ router.get("/", (req, res) => {
     Blog.findAll({
         order: [
             ["id", "DESC"]
+        ],
+        include: [
+            {
+                model: Comment,
+                as: "comments"
+            }
         ]
     }).then(data => {
         res.json(data);
