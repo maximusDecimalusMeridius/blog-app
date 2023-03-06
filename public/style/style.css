@@ -271,7 +271,8 @@ input, textarea {
     color: var(--header-color);
 }
 
-#add-comment-button {
+.add-comment-button,
+.submit-comment-button {
     height: 25px;
     width: 100px;
     background: var(--seaweed-background);
@@ -282,7 +283,8 @@ input, textarea {
     transition: all .1s ease-out;
 }
 
-#add-comment-button:hover {
+.add-comment-button:hover,
+.submit-comment-button:hover {
     background: var(--faded-header-color);
     color: var(--seaweed-background);
     border: 2px solid var(--seaweed-background);
@@ -290,7 +292,8 @@ input, textarea {
     cursor: pointer;
 }
 
-#add-comment-button:active {
+.add-comment-button:active,
+.add-submit-button:active {
     box-shadow: inset 2px 2px 4px white,
                 inset -2px -2px 4px white;
 }
