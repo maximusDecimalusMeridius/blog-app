@@ -42,11 +42,11 @@
                             </div>
                         </div>                        
                     {{/each}}
-                <button id="add-comment-button">Comment</button>
                 {{/if}}
                 {{#unless this.comments}}
-                    No comments have been added!
+                    <div class="nocomment">Be the first to comment!</div>
                 {{/unless}}
+                <button id="add-comment-button">Comment</button>
                 </div>
             
         </li>

@@ -28,7 +28,7 @@ submitCommentButton.addEventListener("click", async (event) => {
             blog_id: event.target.parentNode.parentNode.parentNode.parentNode.dataset.id
         }
         
-        await fetch("/blogs/comments",{
+        const result = await fetch("/blogs/comments",{
             method:"POST",
             body:JSON.stringify(newCommentObj),
             headers:{
@@ -36,7 +36,14 @@ submitCommentButton.addEventListener("click", async (event) => {
             }
         })
 
-        location.reload();
+        //reset fields and reload page
+        commentTitle.value = "";
+        commentContent.value = "";
+        if(result.status === 500){
+            alert("Please login before commenting");
+        } else {
+            location.reload();
+        }
     } catch(error) {
         console.error(error);
         json.status(500)

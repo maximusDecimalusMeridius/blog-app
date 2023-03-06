@@ -8,14 +8,16 @@ router.get("/", async (req, res) => {
         let allBlogs = await Blog.findAll({
             include: [
                 { model: User},
-                { model: Comment, as: "comments"}
+                { model: Comment, as: "comments" }
             ],
             order: [
-                ["id", "DESC"]
+                ["id", "DESC"],
+                [{ model: Comment, as: "comments" }, "id", "DESC"]
             ]
         });
+
         allBlogs = allBlogs.map(blog => blog.toJSON());
-        console.log(allBlogs);
+        
         for(let i = 0; i < allBlogs.length; i++){
             allBlogs[i].formattedDate = allBlogs[i].createdAt.toLocaleDateString("en-us");
             for(let j = 0; j < allBlogs[i].comments.length; j++){
@@ -26,11 +28,11 @@ router.get("/", async (req, res) => {
                     minute: "2-digit"
                 });
             }
-            console.log(allBlogs[i]);
         }
 
         res.render("home", {
             allBlogs: allBlogs
+
         })
     } catch (error) {
         console.log(error);
@@ -70,7 +72,6 @@ router.get("/dashboard", async (req, res) => {
                     minute: "2-digit"
                 });
             }
-            console.log(allBlogs[i]);
         }
 
         res.render("dashboard", {

@@ -14,6 +14,7 @@
             </div>
             
                 <div class="comment-container hide">
+                    <div id="comment-banner">Comments</div>
                     {{#if this.comments}}
                         {{#each this.comments}}
                             <div class="comment">
@@ -28,7 +29,7 @@
                         {{/each}}
                     {{/if}}
                     {{#unless this.comments}}
-                        <div>No comments have been added!</div>
+                        <div class="nocomment">Be the first to comment!</div>
                     {{/unless}}
                     <button id="add-comment-button">Comment</button>
                     <div class="new-form">

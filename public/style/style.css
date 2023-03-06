@@ -1,6 +1,7 @@
 :root {
     /* CSS HEX from coolors.co*/
-    --header-color: rgb(35 16 16);
+    --header-color: rgb(35, 16, 16);
+    --faded-header-color: rgb(90, 68, 68);
     --seaweed-background: rgb(217 234 211);
 }
 
@@ -41,6 +42,11 @@ button {
     width: 50%;
     margin-top: 5px;
     cursor: pointer;
+}
+
+input, textarea {
+    padding: 20px;
+    font-family: 'Calibri'
 }
 
 #nav-menu {
@@ -97,7 +103,6 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--header-color);
     color: var(--seaweed-background);
 }
 
@@ -106,14 +111,14 @@ button {
     width: 200px;
     padding: 15px;
     margin: 5px;
-    background: green;
+    background: var(--header-color);
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
 }
 
 #add-blog-button:hover {
-    background: rgba(0, 128, 0, .8);
+    background: var(--faded-header-color);
     cursor: pointer;
 }
 
@@ -150,6 +155,7 @@ button {
 }
 
 #bloglist {
+    padding-top: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -158,9 +164,22 @@ button {
 }
 
 .blogpost {
-    width: 60%;
-    border: 1px solid green;
+    width: 80%;
     margin: 20px;
+    border: 2px solid var(--header-color);
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px var(--header-color);
+    transition: all .5s ease-out;
+    position: relative;
+}
+
+.blogpost:first-child::before {
+    content: '✨ Newest Post!';
+    color: purple;
+    font-weight: bold;
+    position: absolute;
+    right: 0px;
+    top: -25px;
 }
 
 .blogheader {
@@ -189,27 +208,61 @@ button {
     padding: 20px;
     color: black;
     font-weight: bolder;
+    font-size: 20px;
 }
 
 .comment-container {
     margin: 20px;
-    padding: 5px;
+    padding: 20px 20px;
     background: var(--header-color);
     color: var(--seaweed-background);
-    border: 2px solid var(--header-color);
+    border: 2px solid white;
+    border-radius: 2px;
+    box-shadow: 4px 4px 8px gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nocomment {
+    text-align: center;
 }
 
 .comment {
+    width: 100%;
     margin-bottom: 15px;
     border: 1px solid var(--seaweed-background);
+}
 
+#comment-banner {
+    margin: 0px 20px 0px auto;
+    width: fit-content;
+    height: 50px;
+    font-size: 32px;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .comment-header {
-    padding: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: var(--faded-header-color);
+    border: 1px solid var(--seaweed-background);
+}
+
+.comment-header h2 {
+    width: 70%;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 2px;
+}
+
+.comment-header div {
+    padding: 5px;
+    width: 30%;
+    text-align: right;
 }
 
 .comment-body {
@@ -221,17 +274,19 @@ button {
 #add-comment-button {
     height: 25px;
     width: 100px;
-    margin: 5px;
-    background: green;
+    background: var(--seaweed-background);
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
     white-space: nowrap;
-    float: right;
+    transition: all .1s ease-out;
 }
 
 #add-comment-button:hover {
-    background: rgba(0, 128, 0, .8);
+    background: var(--faded-header-color);
+    color: var(--seaweed-background);
+    border: 2px solid var(--seaweed-background);
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -252,4 +307,12 @@ footer {
 
 .hide {
     display: none;
+}
+
+/* media css */
+
+@media (width < 800px){
+    .blogpost {
+        width: 95%;
+    }
 }

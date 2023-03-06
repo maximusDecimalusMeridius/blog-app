@@ -40,6 +40,10 @@ router.get("/:id", (req, res) => {
 
 //POST a new record
 router.post("/", (req, res) => {
+    if(!req.session.userId){
+        res.status(500).json({msg: "Please login before commenting"})
+        return;
+    }
     console.log(req.session);
     Comment.create({
         title: req.body.title,
