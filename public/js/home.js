@@ -1,14 +1,14 @@
-const blogPosts = document.querySelectorAll(".blogpost");
+const blogHeaders = document.querySelectorAll(".blogheader");
 const addCommentButton = document.querySelector("#add-comment-button");
 const submitCommentButton = document.querySelector("#submit-comment-button");
 const blogTitle = document.querySelector("#blog-title");
 const blogContent = document.querySelector("#blog-content");
 
-
-blogPosts.forEach(blogPost => {
+blogHeaders.forEach(blogPost => {
     blogPost.addEventListener("click", function(event) {
+        console.log(this);
         if(event.target.id != "add-comment-button"){
-            this.lastElementChild.classList.toggle("hide");
+            this.parentNode.lastElementChild.classList.toggle("hide");
         }
     })
 })
@@ -20,12 +20,12 @@ addCommentButton.addEventListener("click", (event) =>  {
 
 submitCommentButton.addEventListener("click", async (event) => {
     event.preventDefault();
-    console.log(event);
     try{
        
         const newCommentObj = {
             title: blogTitle.value,
-            content: blogContent.value
+            content: blogContent.value,
+            blog_id: event.target.parentNode.parentNode.parentNode.parentNode.dataset.id
         }
         
         await fetch("/blogs/comments",{

@@ -46,7 +46,7 @@ router.post("/", (req, res) => {
         content: req.body.content,
         author: req.session.username || req.body.author,
         author_id: req.session.userId,
-        blog_id: 3
+        blog_id: req.body.blog_id
     })
     .then(blogData => {
         res.json(blogData);

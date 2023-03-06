@@ -15,22 +15,22 @@
             
                 <div class="comment-container hide">
                     {{#if this.comments}}
-                    {{#each this.comments}}
-                        <div class="comment">
-                            <div class="comment-header">
-                                <h2>{{this.title}}</h2>
-                                <div>Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
-                            </div>
-                            <div class="comment-body">
-                                <p>{{this.content}}</p>
-                            </div>
-                        </div>                        
-                    {{/each}}
-                {{/if}}
-                {{#unless this.comments}}
-                <div>No comments have been added!</div>
-                {{/unless}}
-                <button id="add-comment-button">Comment</button>
+                        {{#each this.comments}}
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <h2>{{this.title}}</h2>
+                                    <div>Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
+                                </div>
+                                <div class="comment-body">
+                                    <p>{{this.content}}</p>
+                                </div>
+                            </div>                        
+                        {{/each}}
+                    {{/if}}
+                    {{#unless this.comments}}
+                        <div>No comments have been added!</div>
+                    {{/unless}}
+                    <button id="add-comment-button">Comment</button>
                     <div class="new-form">
                         <form id="new-blog-form">
                             <div>
@@ -41,7 +41,7 @@
                                 <label for="blog-content">Body:</label><br />
                                 <textarea type="text" name="blog-content" id="blog-content"></textarea>
                             </div>
-                            <button type="button" id="submit-comment-button" class="button">Submit</button>
+                            <button type="submit" id="submit-comment-button" class="button">Submit</button>
                         </form>
                     </div>
                 </div>
