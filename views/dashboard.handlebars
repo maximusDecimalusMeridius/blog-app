@@ -21,7 +21,7 @@
 
 <ul id="bloglist">
     {{#each allBlogs}}
-        <li class="blogpost">
+        <li class="blogpost" data-id={{this.id}}>
             <div class="blogheader">
                 <h2>{{this.title}}</h2>
                 <div>Posted by {{this.User.username}} on {{this.formattedDate}}</div>
@@ -29,28 +29,40 @@
             <div class="blogcontent">
             {{this.content}}
             </div>
-                <div class="comment-container hide">
-                    {{#if this.comments}}
-                    {{#each this.comments}}
-                        <div class="comment">
-                            <div class="comment-header">
-                                <h2>{{this.title}}</h2>
-                                <div>Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
-                            </div>
-                            <div class="comment-body">
-                                <p>{{this.content}}</p>
-                            </div>
-                        </div>                        
-                    {{/each}}
-                {{/if}}
+            <div class="comment-container hide">
+                {{#if this.comments}}
+                {{#each this.comments}}
+                    <div class="comment">
+                        <div class="comment-header">
+                            <h2>{{this.title}}</h2>
+                            <div>Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
+                        </div>
+                        <div class="comment-body">
+                            <p>{{this.content}}</p>
+                        </div>
+                    </div>                        
+                {{/each}}
+            {{/if}}
                 {{#unless this.comments}}
                     <div class="nocomment">Be the first to comment!</div>
                 {{/unless}}
                 <button id="add-comment-button">Comment</button>
+                <div class="new-form">
+                    <form id="new-comment-form">
+                        <div>
+                            <label for="comment-title">Title: </label><br />
+                            <input type="text" name="comment-title" id="comment-title" />
+                        </div>
+                        <div>
+                            <label for="comment-content">Body:</label><br />
+                            <textarea type="text" name="comment-content" id="comment-content"></textarea>
+                        </div>
+                        <button type="submit" id="submit-comment-button" class="button">Submit</button>
+                    </form>
                 </div>
-            
+            </div>
         </li>
     {{/each}}
 </ul>
 
-<script src="/js/blog.js"></script>
+<script src="/js/dashboard.js"></script>

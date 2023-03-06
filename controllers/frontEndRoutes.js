@@ -57,7 +57,8 @@ router.get("/dashboard", async (req, res) => {
                 { model: Comment, as: "comments"}
             ],
             order: [
-                ["id", "DESC"]
+                ["id", "DESC"],
+                [{ model: Comment, as: "comments" }, "id", "DESC"]
             ]
         })
         allBlogs = allBlogs.map(blog => blog.toJSON());
