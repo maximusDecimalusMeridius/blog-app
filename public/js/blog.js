@@ -1,6 +1,15 @@
 const addButton = document.querySelector("#add-blog-button");
 const addBlogForm = document.querySelector("#new-form");
 const submitButton = document.querySelector("#submit-button");
+const blogPosts = document.querySelectorAll(".blogpost");
+
+blogPosts.forEach(blogPost => {
+    blogPost.addEventListener("click", function(event) {
+        if(event.target.id != "add-comment-button"){
+            this.lastElementChild.classList.toggle("hide");
+        }
+    })
+})
 
 addButton.addEventListener("click", () => {
     const computedBlogForm = getComputedStyle(addBlogForm)

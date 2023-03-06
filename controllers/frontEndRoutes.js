@@ -1,21 +1,31 @@
 const express = require("express");
-const Blog = require("../models/Blog");
-const User = require("../models/User");
+const {Blog, User, Comment} = require("../models");
 const router = express.Router();
 const sequelize = require('../config/connection');
 
 router.get("/", async (req, res) => {
     try {   
         let allBlogs = await Blog.findAll({
-            include: [User],
+            include: [
+                { model: User},
+                { model: Comment, as: "comments"}
+            ],
             order: [
                 ["id", "DESC"]
             ]
         });
         allBlogs = allBlogs.map(blog => blog.toJSON());
-        
+        console.log(allBlogs);
         for(let i = 0; i < allBlogs.length; i++){
             allBlogs[i].formattedDate = allBlogs[i].createdAt.toLocaleDateString("en-us");
+            for(let j = 0; j < allBlogs[i].comments.length; j++){
+                allBlogs[i].comments[j].formattedDate = allBlogs[i].comments[j].createdAt.toLocaleDateString("en-us");
+                allBlogs[i].comments[j].formattedTime = allBlogs[i].comments[j].createdAt.toLocaleTimeString("en-us", {
+                    hour12: false,
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
+            }
             console.log(allBlogs[i]);
         }
 
@@ -40,7 +50,10 @@ router.get("/dashboard", async (req, res) => {
             where: {
                 user_id: req.session.userId
             },
-            include: [User],
+            include: [
+                { model: User},
+                { model: Comment, as: "comments"}
+            ],
             order: [
                 ["id", "DESC"]
             ]
@@ -49,6 +62,14 @@ router.get("/dashboard", async (req, res) => {
         
         for(let i = 0; i < allBlogs.length; i++){
             allBlogs[i].formattedDate = allBlogs[i].createdAt.toLocaleDateString("en-us");
+            for(let j = 0; j < allBlogs[i].comments.length; j++){
+                allBlogs[i].comments[j].formattedDate = allBlogs[i].comments[j].createdAt.toLocaleDateString("en-us");
+                allBlogs[i].comments[j].formattedTime = allBlogs[i].comments[j].createdAt.toLocaleTimeString("en-us", {
+                    hour12: false,
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
+            }
             console.log(allBlogs[i]);
         }
 

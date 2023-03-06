@@ -12,6 +12,28 @@
             <div class="blogcontent">
             {{this.content}}
             </div>
+            
+                <div class="comment-container hide">
+                    {{#if this.comments}}
+                    {{#each this.comments}}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <h2>{{this.title}}</h2>
+                                <div>Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
+                            </div>
+                            <div class="comment-body">
+                                <p>{{this.content}}</p>
+                            </div>
+                        </div>                        
+                    {{/each}}
+                <button id="add-comment-button">Comment</button>
+                {{/if}}
+                {{#unless this.comments}}
+                No comments have been added!
+                {{/unless}}
+                </div>
         </li>
     {{/each}}
 </ul>
+
+<script src="/js/home.js"></script>

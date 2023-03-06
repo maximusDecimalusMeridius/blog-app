@@ -44,6 +44,7 @@ router.post("/", (req, res) => {
     Comment.create({
         title: req.body.title,
         content: req.body.content,
+        author: req.session.userId || req.body.author,
         author_id: req.body.author_id,
         blog_id: req.body.blog_id
     })
