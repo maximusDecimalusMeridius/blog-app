@@ -128,19 +128,23 @@ button {
     padding: 10px;
 }
 
-#new-blog-form {
+#new-blog-form,
+#new-comment-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#new-blog-form div {
+#new-blog-form div,
+#new-comment-form div {
     width: 100%;
 }
 
 #blog-title,
-#blog-content {
+#blog-content,
+#comment-title,
+#comment-content {
     width: 100%;
     flex-grow: 1;
 }

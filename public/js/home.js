@@ -1,8 +1,8 @@
 const blogHeaders = document.querySelectorAll(".blogheader");
 const addCommentButton = document.querySelector("#add-comment-button");
 const submitCommentButton = document.querySelector("#submit-comment-button");
-const blogTitle = document.querySelector("#blog-title");
-const blogContent = document.querySelector("#blog-content");
+const commentTitle = document.querySelector("#comment-title");
+const commentContent = document.querySelector("#comment-content");
 
 blogHeaders.forEach(blogPost => {
     blogPost.addEventListener("click", function(event) {
@@ -23,8 +23,8 @@ submitCommentButton.addEventListener("click", async (event) => {
     try{
        
         const newCommentObj = {
-            title: blogTitle.value,
-            content: blogContent.value,
+            title: commentTitle.value,
+            content: commentContent.value,
             blog_id: event.target.parentNode.parentNode.parentNode.parentNode.dataset.id
         }
         
