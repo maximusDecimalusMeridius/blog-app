@@ -19,7 +19,7 @@ const sequelize = require('./config/connection');
 const PORT = process.env.PORT || 3000;
 
 //build tables when index.js is run
-const { Roommate, UOM, Event, Task, Home } = require("./models");
+const { Blog, Comment, User } = require("./models");
 
 //create session objection
 const sess = {

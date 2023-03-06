@@ -4,6 +4,9 @@ const router = express.Router();
 const blogRoutes = require("./blogRoutes");
 router.use("/blogs", blogRoutes);
 
+const commentRoutes = require("./commentRoutes");
+router.use("/blogs/comments", commentRoutes);
+
 const userRoutes = require("./userRoutes");
 router.use("/users", userRoutes);
 

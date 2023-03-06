@@ -1,14 +1,12 @@
 //loop in dependencies
 const express = require("express");
-const Blog = require("../models/Blog");
+const Comment = require("../models/Comment");
 const router = express.Router();
 
 //GET all records
 router.get("/", (req, res) => {
-    Blog.findAll({
-        order: [
-            ["id", "DESC"]
-        ]
+    Comment.findAll({
+        
     }).then(data => {
         res.json(data);
     }).catch(error => {
@@ -22,7 +20,7 @@ router.get("/", (req, res) => {
 
 //GET one record by id
 router.get("/:id", (req, res) => {
-    Blog.findByPk(req.params.id)
+    Comment.findByPk(req.params.id)
     .then(data => {
         if(data){
            return res.json(data);
@@ -43,10 +41,11 @@ router.get("/:id", (req, res) => {
 //POST a new record
 router.post("/", (req, res) => {
     console.log(req.session);
-    Blog.create({
+    Comment.create({
         title: req.body.title,
         content: req.body.content,
-        user_id: req.session.userId || req.body.user_id
+        author_id: req.body.author_id,
+        blog_id: req.body.blog_id
     })
     .then(blogData => {
         res.json(blogData);
@@ -61,9 +60,9 @@ router.post("/", (req, res) => {
 
 //UPDATE a record
 router.put("/:id", (req, res) => {
-    Blog.update({
-        title: req.body.title,
-        content: req.body.content
+    Comment.update({
+        title: "Test title",
+        content: "Test content"
     },{
         where: {
             id:req.params.id
@@ -85,9 +84,9 @@ router.put("/:id", (req, res) => {
 
 //DELETE a record
 router.delete("/:id", (req, res) => {
-    Blog.destroy({
+    Comment.destroy({
         where:{
-            id: req.params.id
+            id:req.params.id
         }
     }).then(data=>{
         if(data){
