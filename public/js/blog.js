@@ -1,5 +1,5 @@
 const addButton = document.querySelector("#add-blog-button");
-const addBlogForm = document.querySelector("#new-form");
+const addBlogForm = document.querySelector(".new-form");
 const submitButton = document.querySelector("#submit-button");
 const blogPosts = document.querySelectorAll(".blogpost");
 

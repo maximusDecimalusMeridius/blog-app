@@ -4,7 +4,7 @@
 
 <ul id="bloglist">
     {{#each allBlogs}}
-        <li class="blogpost">
+        <li class="blogpost" data-id={{this.id}}>
             <div class="blogheader">
                 <h2>{{this.title}}</h2>
                 <div>Posted by {{this.User.username}} on {{this.formattedDate}}</div>
@@ -26,11 +26,24 @@
                             </div>
                         </div>                        
                     {{/each}}
-                <button id="add-comment-button">Comment</button>
                 {{/if}}
                 {{#unless this.comments}}
-                No comments have been added!
+                <div>No comments have been added!</div>
                 {{/unless}}
+                <button id="add-comment-button">Comment</button>
+                    <div class="new-form">
+                        <form id="new-blog-form">
+                            <div>
+                                <label for="blog-title">Title: </label><br />
+                                <input type="text" name="blog-title" id="blog-title" />
+                            </div>
+                            <div>
+                                <label for="blog-content">Body:</label><br />
+                                <textarea type="text" name="blog-content" id="blog-content"></textarea>
+                            </div>
+                            <button type="button" id="submit-comment-button" class="button">Submit</button>
+                        </form>
+                    </div>
                 </div>
         </li>
     {{/each}}
