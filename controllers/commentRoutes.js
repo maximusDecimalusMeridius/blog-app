@@ -64,7 +64,7 @@ router.post("/", (req, res) => {
 })
 
 //UPDATE a record
-router.put("/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
     Comment.update({
         title: "Test title",
         content: "Test content"
@@ -88,16 +88,23 @@ router.put("/:id", (req, res) => {
 })
 
 //DELETE a record
-router.delete("/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
+    if(!req.session.userId){
+        return res.status(401).json( {message: "Unauthorized"} )
+    }
+
+    console.log(req);
+
     Comment.destroy({
         where:{
-            id:req.params.id
+            id: req.params.id,
+            author_id: req.session.userId
         }
     }).then(data=>{
         if(data){
             return res.json(data)
         } else {
-            return res.status(404).json({message: "Record doesn't exist!"})
+            return res.status(404).json({message: "Error deleting record!"})
         }
     }).catch(error =>{
         console.log(error);

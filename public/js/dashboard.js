@@ -1,23 +1,15 @@
 const addBlogButton = document.querySelector("#add-blog-button");
 const addBlogForm = document.querySelector(".new-form");
 const submitBlogButton = document.querySelector("#submit-button");
+
 const editBlogButtons = document.querySelectorAll(".edit-blog-button");
 const deleteBlogButtons = document.querySelectorAll(".delete-blog-button");
-const blogHeaders = document.querySelectorAll(".blogheader");
-
+const editCommentButtons = document.querySelectorAll(".edit-comment-button");
+const deleteCommentButtons = document.querySelectorAll(".delete-comment-button");
 const addCommentButtons = document.querySelectorAll(".add-comment-button");
 const submitCommentButtons = document.querySelectorAll(".submit-comment-button");
 
-blogHeaders.forEach(blogPost => {
-    blogPost.addEventListener("click", function(event) {
-        if( event.target.classList.contains("blogheader") ||
-            event.target.classList.contains("blogheader-title") ||
-            event.target.classList.contains("blogheader-date")
-            ) {
-            this.parentNode.lastElementChild.classList.toggle("hide");
-        }
-    })
-})
+const blogHeaders = document.querySelectorAll(".blogheader");
 
 addBlogButton.addEventListener("click", () => {
     const computedBlogForm = getComputedStyle(addBlogForm)
@@ -52,11 +44,22 @@ submitBlogButton.addEventListener("click", async (event) => {
     }
 })
 
-for(let i = 0; i < deleteBlogButtons.length; i++) {
-    deleteBlogButtons[i].addEventListener("click", async (event) => {
+blogHeaders.forEach( blogPost => {
+    blogPost.addEventListener("click", function(event) {
+        if( event.target.classList.contains("blogheader") ||
+            event.target.classList.contains("blogheader-title") ||
+            event.target.classList.contains("blogheader-date")
+            ) {
+            this.parentNode.lastElementChild.classList.toggle("hide");
+        }
+    })
+})
+
+deleteBlogButtons.forEach( blog => {
+    blog.addEventListener("click", async (event) => {
         try {
             const blogId = event.target.parentNode.parentNode.parentNode.dataset.id;
-            const result = await fetch(`/blogs/${blogId}`, {
+            const result = await fetch(`/blogs/delete/${blogId}`, {
                 method: "DELETE",
             });
             
@@ -67,18 +70,35 @@ for(let i = 0; i < deleteBlogButtons.length; i++) {
             console.error(error);
         }
     })
-}
+})
 
-for(let i = 0; i < addCommentButtons.length; i++){
-    addCommentButtons[i].addEventListener("click", (event) =>  {
+deleteCommentButtons.forEach( comment => {
+    comment.addEventListener("click", async (event) => {
+        try {
+            const comment = event.target.parentNode.parentNode.parentNode.dataset.id;
+            const result = await fetch(`/blogs/comments/delete/${comment}`, {
+                method: "DELETE",
+            });
+            
+            if(result.ok){
+                location.reload();
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    })
+})
+    
+
+addCommentButtons.forEach( comment => {
+    comment.addEventListener("click", (event) =>  {
         event.target.style.display = "none";
         event.target.nextElementSibling.style.display = "block";
     })
-}
+})
 
-for(let i = 0; i < submitCommentButtons.length; i++){
-
-    submitCommentButtons[i].addEventListener("click", async (event) => {
+submitCommentButtons.forEach( button => {
+    button.addEventListener("click", async (event) => {
         event.preventDefault();
         console.log(event.target.parentNode[0]);
         try{
@@ -110,4 +130,4 @@ for(let i = 0; i < submitCommentButtons.length; i++){
             json.status(500)
         }
     })
-}
+})

@@ -1,7 +1,10 @@
-const blogHeaders = document.querySelectorAll(".blogheader");
-
+const editBlogButtons = document.querySelectorAll(".edit-blog-button");
+const deleteBlogButtons = document.querySelectorAll(".delete-blog-button");
+const editCommentButtons = document.querySelectorAll(".edit-comment-button");
+const deleteCommentButtons = document.querySelectorAll(".delete-comment-button");
 const addCommentButtons = document.querySelectorAll(".add-comment-button");
 const submitCommentButtons = document.querySelectorAll(".submit-comment-button");
+const blogHeaders = document.querySelectorAll(".blogheader");
 
 blogHeaders.forEach(blogPost => {
     blogPost.addEventListener("click", function(event) {
@@ -11,16 +14,49 @@ blogHeaders.forEach(blogPost => {
     })
 })
 
-for(let i = 0; i < addCommentButtons.length; i++){
-    addCommentButtons[i].addEventListener("click", (event) =>  {
+deleteBlogButtons.forEach( blog => {
+    blog.addEventListener("click", async (event) => {
+        try {
+            const blogId = event.target.parentNode.parentNode.parentNode.dataset.id;
+            const result = await fetch(`/blogs/delete/${blogId}`, {
+                method: "DELETE",
+            });
+            
+            if(result.ok){
+                location.reload();
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    })
+})
+
+deleteCommentButtons.forEach( comment => {
+    comment.addEventListener("click", async (event) => {
+        try {
+            const comment = event.target.parentNode.parentNode.parentNode.dataset.id;
+            const result = await fetch(`/blogs/comments/delete/${comment}`, {
+                method: "DELETE",
+            });
+            
+            if(result.ok){
+                location.reload();
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    })
+})
+
+addCommentButtons.forEach( comment => {
+    comment.addEventListener("click", (event) =>  {
         event.target.style.display = "none";
         event.target.nextElementSibling.style.display = "block";
     })
-}
+})
 
-for(let i = 0; i < submitCommentButtons.length; i++){
-
-    submitCommentButtons[i].addEventListener("click", async (event) => {
+submitCommentButtons.forEach( button => {
+    button.addEventListener("click", async (event) => {
         event.preventDefault();
         console.log(event.target.parentNode[0]);
         try{
@@ -52,5 +88,4 @@ for(let i = 0; i < submitCommentButtons.length; i++){
             json.status(500)
         }
     })
-}
-
+})

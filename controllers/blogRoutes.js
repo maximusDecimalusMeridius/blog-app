@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 })
 
 //GET one record by id
-router.get("/:id", (req, res) => {
+router.get("/get/:id", (req, res) => {
 
     Blog.findByPk(req.params.id)
     .then(data => {
@@ -70,7 +70,7 @@ router.post("/", (req, res) => {
 })
 
 //UPDATE a record
-router.put("/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
     if(!req.session.userId){
         return res.status(401).json( {message: "Unauthorized"} )
     }
@@ -98,7 +98,7 @@ router.put("/:id", (req, res) => {
 })
 
 //DELETE a record
-router.delete("/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
     if(!req.session.userId){
         return res.status(401).json( {message: "Unauthorized"} )
     }

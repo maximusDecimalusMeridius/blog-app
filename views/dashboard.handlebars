@@ -36,10 +36,14 @@
             <div class="comment-container hide">
                 {{#if this.comments}}
                 {{#each this.comments}}
-                    <div class="comment">
+                    <div class="comment" data-id={{this.id}}>
                         <div class="comment-header">
                             <h2>{{this.title}}</h2>
-                            <div>Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
+                            <div class="comment-menu">
+                                <div class="commentheader-date">Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
+                                <div href="" class="edit-comment-button">✏️</div>
+                                <div class="delete-comment-button">❌</div>
+                            </div>
                         </div>
                         <div class="comment-body">
                             <p>{{this.content}}</p>
@@ -67,6 +71,9 @@
             </div>
         </li>
     {{/each}}
+    {{#unless allBlogs}}
+        <div class="noblog">Click above to write your first blog!</div>
+    {{/unless}}
 </ul>
 
 <script src="/js/dashboard.js"></script>
