@@ -1,6 +1,8 @@
 const addBlogButton = document.querySelector("#add-blog-button");
 const addBlogForm = document.querySelector(".new-form");
 const submitBlogButton = document.querySelector("#submit-button");
+const editBlogButtons = document.querySelectorAll(".edit-blog-button");
+const deleteBlogButtons = document.querySelectorAll(".delete-blog-button");
 const blogHeaders = document.querySelectorAll(".blogheader");
 
 const addCommentButtons = document.querySelectorAll(".add-comment-button");
@@ -8,7 +10,10 @@ const submitCommentButtons = document.querySelectorAll(".submit-comment-button")
 
 blogHeaders.forEach(blogPost => {
     blogPost.addEventListener("click", function(event) {
-        if(event.target.id != "add-comment-button"){
+        if( event.target.classList.contains("blogheader") ||
+            event.target.classList.contains("blogheader-title") ||
+            event.target.classList.contains("blogheader-date")
+            ) {
             this.parentNode.lastElementChild.classList.toggle("hide");
         }
     })
@@ -39,11 +44,30 @@ submitBlogButton.addEventListener("click", async (event) => {
         }
     })
     
+    document.querySelector("#blog-title").value = "";
+    document.querySelector("#blog-content").value = "";
     location.reload();    
     } catch (error) {
         console.error(error);
     }
 })
+
+for(let i = 0; i < deleteBlogButtons.length; i++) {
+    deleteBlogButtons[i].addEventListener("click", async (event) => {
+        try {
+            const blogId = event.target.parentNode.parentNode.parentNode.dataset.id;
+            const result = await fetch(`/blogs/${blogId}`, {
+                method: "DELETE",
+            });
+            
+            if(result.ok){
+                location.reload();
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    })
+}
 
 for(let i = 0; i < addCommentButtons.length; i++){
     addCommentButtons[i].addEventListener("click", (event) =>  {

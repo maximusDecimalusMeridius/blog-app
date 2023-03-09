@@ -28,6 +28,7 @@ router.get("/", (req, res) => {
 
 //GET one record by id
 router.get("/:id", (req, res) => {
+
     Blog.findByPk(req.params.id)
     .then(data => {
         if(data){
@@ -48,6 +49,10 @@ router.get("/:id", (req, res) => {
 
 //POST a new record
 router.post("/", (req, res) => {
+    if(!req.session.userId){
+        return res.status(401).json( {message: "Unauthorized"} )
+    }
+
     Blog.create({
         title: req.body.title,
         content: req.body.content,
@@ -66,6 +71,10 @@ router.post("/", (req, res) => {
 
 //UPDATE a record
 router.put("/:id", (req, res) => {
+    if(!req.session.userId){
+        return res.status(401).json( {message: "Unauthorized"} )
+    }
+
     Blog.update({
         title: req.body.title,
         content: req.body.content
@@ -90,9 +99,14 @@ router.put("/:id", (req, res) => {
 
 //DELETE a record
 router.delete("/:id", (req, res) => {
+    if(!req.session.userId){
+        return res.status(401).json( {message: "Unauthorized"} )
+    }
+    
     Blog.destroy({
         where:{
-            id: req.params.id
+            id: req.params.id,
+            user_id: req.session.userId
         }
     }).then(data=>{
         if(data){

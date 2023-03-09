@@ -131,7 +131,7 @@ input, textarea {
     width: fit-content;
     padding: 10px 15px;
     margin: 10px;
-    background-color: var(--seaweed-background);
+    background-color: var(--light-gray-background);
     border-radius: 15px;
 }
 
@@ -158,6 +158,7 @@ input, textarea {
     padding: 15px;
     margin: 5px;
     background: var(--header-color);
+    color: white;
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
@@ -179,6 +180,7 @@ input, textarea {
     padding: 10px;
 }
 
+/* Form CSS */
 #new-blog-form,
 #new-comment-form {
     display: flex;
@@ -207,7 +209,7 @@ input, textarea {
     justify-content: center;
     align-items: center;
     list-style-type: none;
-    background: var(--light-gray-background);
+    background: var(--seaweed-background);
 }
 
 .blogpost {
@@ -218,7 +220,7 @@ input, textarea {
     box-shadow: 4px 4px 8px var(--header-color);
     transition: all .5s ease-out;
     position: relative;
-    background: var(--seaweed-background);
+    background: var(--light-gray-background);
 }
 
 .blogpost:first-child::before {
@@ -249,15 +251,23 @@ input, textarea {
 
 .blogheader div {
     width: fit-content;
+}
+
+.blogheader-date {
+    width: fit-content;
     padding: 10px;
     font-style: italic;
+    color: white;
 }
 
 .blogcontent {
     padding: 20px;
+    background: var(--light-gray-background);
     color: black;
     font-weight: bolder;
     font-size: 20px;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
 }
 
 .comment-container {
@@ -266,7 +276,7 @@ input, textarea {
     background: var(--header-color);
     color: var(--seaweed-background);
     border: 2px solid white;
-    border-radius: 2px;
+    border-radius: 4px;
     box-shadow: 4px 4px 8px gray;
     display: flex;
     flex-direction: column;
@@ -274,22 +284,34 @@ input, textarea {
     align-items: center;
 }
 
+.blog-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-container label {
+    color: white;
+}
+
 .nocomment {
     text-align: center;
+    color: white;
 }
 
 .comment {
     width: 100%;
     margin-bottom: 15px;
-    border: 1px solid var(--seaweed-background);
-    border-radius: 5px;
+    border: 1px solid white;
+    box-shadow: 4px 4px 7px black;
 }
 
 #comment-banner {
-    margin: 0px 20px 0px auto;
+    margin: 0px 10px 0px auto;
     width: fit-content;
-    height: 50px;
-    font-size: 32px;
+    height: 35px;
+    font-size: 24px;
     font-weight: bold;
     font-style: italic;
     color: white;
@@ -299,8 +321,6 @@ input, textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--faded-header-color);
-    border: 1px solid var(--seaweed-background);
     color: white;
 }
 
@@ -315,6 +335,9 @@ input, textarea {
     padding: 5px;
     width: 30%;
     text-align: right;
+    background: white;
+    color: black;
+    border-bottom: 1px solid black;
 }
 
 .comment-body {
