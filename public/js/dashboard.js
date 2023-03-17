@@ -11,15 +11,6 @@ const submitCommentButtons = document.querySelectorAll(".submit-comment-button")
 
 const blogHeaders = document.querySelectorAll(".blogheader");
 
-addBlogButton.addEventListener("click", () => {
-    const computedBlogForm = getComputedStyle(addBlogForm)
-    if(computedBlogForm.display == "none"){
-        addBlogForm.style.display = "block";
-    } else {
-        addBlogForm.style.display = "none"
-    }
-})
-
 submitBlogButton.addEventListener("click", async (event) => {
     try{
         event.preventDefault();
@@ -55,6 +46,17 @@ blogHeaders.forEach( blogPost => {
     })
 })
 
+addBlogButton.addEventListener("click", () => {
+    const computedBlogForm = getComputedStyle(addBlogForm)
+    if(computedBlogForm.display == "none"){
+        addBlogForm.style.display = "block";
+    } else {
+        addBlogForm.style.display = "none"
+    }
+})
+
+//TODO: Edit blog listener
+
 deleteBlogButtons.forEach( blog => {
     blog.addEventListener("click", async (event) => {
         try {
@@ -68,6 +70,96 @@ deleteBlogButtons.forEach( blog => {
             }
         } catch(error) {
             console.error(error);
+        }
+    })
+})
+
+addCommentButtons.forEach( comment => {
+    comment.addEventListener("click", (event) =>  {
+        event.target.style.display = "none";
+        event.target.nextElementSibling.style.display = "block";
+    })
+})
+
+editCommentButtons.forEach( button => {
+    button.addEventListener("click", (event) => {
+        if(Window.isEditing != true){
+        
+            Window.isEditing = true;
+
+            const commentTitleBox = event.target.parentNode.parentNode.firstElementChild
+            const commentTitle = event.target.parentNode.parentNode.firstElementChild.textContent;
+            const commentContentBox = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1];
+            const commentContent = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1].textContent;
+
+            const titlePlaceholder = commentTitle;
+            const contentPlaceholder = commentContent;
+
+            const editTitleBox = document.createElement("input");
+            const editContentBox = document.createElement("textarea");
+            editContentBox.classList.add("edit-content");
+            document.querySelector("#add-comment-button").classList.toggle("hide");
+            document.querySelector("#send-it").classList.toggle("hide");
+            const closeEdit = document.createElement("div");
+
+            closeEdit.textContent = "❌";
+            closeEdit.classList.add("cursor");
+            closeEdit.style.fontSize = "20px";
+
+            commentTitleBox.textContent = "";
+            commentContentBox.textContent = "";
+
+            editTitleBox.value = `${commentTitle}`
+            commentTitleBox.appendChild(editTitleBox);
+            commentTitleBox.appendChild(closeEdit);
+
+            editContentBox.value = `${commentContent}`
+            commentContentBox.appendChild(editContentBox);
+
+            closeEdit.addEventListener("click", () => {
+                Window.isEditing = false;
+                commentTitleBox.textContent = titlePlaceholder;
+                commentContentBox.textContent = contentPlaceholder;
+                // commentTitleBox.removeChild(editTitleBox);
+                // commentTitleBox.removeChild(closeEdit);
+                // commentContentBox.removeChild(editContentBox);
+                document.querySelector("#add-comment-button").classList.toggle("hide");
+                document.querySelector("#send-it").classList.toggle("hide");
+            })
+
+            document.querySelector("#send-it").addEventListener("click", async (event) => {
+                event.preventDefault();
+                try{
+                    const newCommentObj = {
+                        title: editTitleBox.value,
+                        content: editContentBox.value,
+                        id: 21
+                    }
+
+                    const result = await fetch (`/blogs/comments/update/`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":"application/json"
+                        },
+                        body: JSON.stringify(newCommentObj)
+                    })
+
+                    const data = await result.json();
+
+                    console.log(data);
+
+                    if(result.ok){
+                        Window.isEditing = false;
+                        commentTitleBox.textContent = newCommentObj.title;
+                        commentContentBox.textContent = newCommentObj.content;
+                        document.querySelector("#add-comment-button").classList.toggle("hide");
+                        document.querySelector("#send-it").classList.toggle("hide");                   
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                }
+            })
         }
     })
 })
@@ -86,14 +178,6 @@ deleteCommentButtons.forEach( comment => {
         } catch(error) {
             console.error(error);
         }
-    })
-})
-    
-
-addCommentButtons.forEach( comment => {
-    comment.addEventListener("click", (event) =>  {
-        event.target.style.display = "none";
-        event.target.nextElementSibling.style.display = "block";
     })
 })
 

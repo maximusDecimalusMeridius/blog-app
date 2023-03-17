@@ -54,7 +54,8 @@
                 {{#unless this.comments}}
                     <div class="nocomment">Be the first to comment!</div>
                 {{/unless}}
-                <button class="add-comment-button">Comment</button>
+                <button class="add-comment-button" id="add-comment-button">Comment</button>
+                <button type="submit" class="button edit hide" id="send-it">Update</button>
                 <div class="new-form">
                     <form id="new-comment-form">
                         <div>
@@ -65,7 +66,7 @@
                             <label for="comment-content">Body:</label><br />
                             <textarea type="text" name="comment-content" id="comment-content"></textarea>
                         </div>
-                        <button type="submit" class="submit-comment-button" class="button">Submit</button>
+                        <button type="submit" class="submit-comment-button button" id="submit-comment-button">Submit</button>
                     </form>
                 </div>
             </div>

@@ -56,7 +56,7 @@ label {
 }
 
 input, textarea {
-    padding: 20px;
+    padding: 5px;
     font-family: 'Calibri'
 }
 
@@ -359,6 +359,7 @@ input, textarea {
     padding: 5px;
     margin: 5px;
     border-radius: 2px;
+    display: flex;
 }
 
 .comment-body {
@@ -417,12 +418,25 @@ footer {
 
 /* util classes */
 
+.edit-content {
+    width: 100%;
+}
+
+.edit {
+    background: green;
+    color: white;
+}
+
 .hide {
     display: none;
 }
 
 .show {
     display: block;
+}
+
+.cursor {
+    cursor: pointer;
 }
 
 /* media css */
@@ -441,6 +455,19 @@ footer {
 
     header {
         justify-content: center;
+    }
+
+    .comment-header {
+        flex-direction: column;
+    }
+
+    .comment-header h2 {
+        width: 100%;
+    }
+
+    .comment-menu {
+        width: 100%;
+        justify-content: flex-end;
     }
 
     #nav-menu li {
