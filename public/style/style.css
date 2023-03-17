@@ -442,7 +442,7 @@ footer {
 .green-update {
     height: 25px;
     width: fit-content;
-    padding-left: 25px;
+    margin-left: 10px;
     padding-top: 2px;
     color: white;
     background: green;

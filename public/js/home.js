@@ -55,6 +55,87 @@ addCommentButtons.forEach( comment => {
     })
 })
 
+editCommentButtons.forEach( button => {
+    button.addEventListener("click", (event) => {
+        if(Window.isEditing != true && localStorage.getItem("userId") === event.target.parentNode.parentNode.dataset.author){
+        
+            Window.isEditing = true;
+
+            const commentTitleBox = event.target.parentNode.parentNode.firstElementChild
+            const commentTitle = event.target.parentNode.parentNode.firstElementChild.textContent;
+            const commentContentBox = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1];
+            const commentContent = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1].textContent;
+
+            const titlePlaceholder = commentTitle;
+            const contentPlaceholder = commentContent;
+
+            const editTitleBox = document.createElement("input");
+            const editContentBox = document.createElement("textarea");
+            editContentBox.classList.add("edit-content");
+            const closeEdit = document.createElement("div");
+            const acceptEdit = document.createElement("div");
+
+            closeEdit.textContent = "❌";
+            closeEdit.classList.add("cursor");
+            closeEdit.style.fontSize = "20px";
+            acceptEdit.textContent = "Update";
+            acceptEdit.classList.add("cursor");
+            acceptEdit.classList.add("green-update");
+            acceptEdit.style.fontSize = "12px";
+
+            commentTitleBox.textContent = "";
+            commentContentBox.textContent = "";
+
+            editTitleBox.value = `${commentTitle}`
+            commentTitleBox.appendChild(editTitleBox);
+            commentTitleBox.appendChild(closeEdit);
+            commentTitleBox.appendChild(acceptEdit);
+
+            editContentBox.value = `${commentContent}`
+            commentContentBox.appendChild(editContentBox);
+
+            closeEdit.addEventListener("click", () => {
+                Window.isEditing = false;
+                commentTitleBox.textContent = titlePlaceholder;
+                commentContentBox.textContent = contentPlaceholder;
+            })
+
+            acceptEdit.addEventListener("click", async (event) => {
+                event.preventDefault();
+
+                try{
+                    const newCommentObj = {
+                        title: editTitleBox.value,
+                        content: editContentBox.value,
+                        id: event.target.parentNode.parentNode.parentNode.dataset.id
+                    }
+
+                    const result = await fetch (`/blogs/comments/update/`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":"application/json"
+                        },
+                        body: JSON.stringify(newCommentObj)
+                    })
+
+                    const data = await result.json();
+
+                    console.log(data);
+
+                    if(result.ok){
+                        Window.isEditing = false;
+                        commentTitleBox.textContent = newCommentObj.title;
+                        commentContentBox.textContent = newCommentObj.content;                 
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                }
+            })
+        }
+    })
+})
+
 submitCommentButtons.forEach( button => {
     button.addEventListener("click", async (event) => {
         event.preventDefault();

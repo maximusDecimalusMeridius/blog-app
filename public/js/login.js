@@ -32,12 +32,15 @@ document.querySelector("#login").addEventListener("submit", async (event) => {
             }
         })
 
+        const data = await result.json();
+
         if(result.status === 401){
             loginError.textContent = "Invalid login credentials";
             setTimeout(() => {
                 loginError.textContent = "";
             }, 2000)
         } else {
+            localStorage.userId = data.username;
             location.href="/dashboard"
         }
     } catch (error) {

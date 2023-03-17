@@ -22,7 +22,7 @@
                     {{#if this.comments}}
                         {{#each this.comments}}
                             <div class="comment" data-id={{this.id}}>
-                                <div class="comment-header">
+                                <div class="comment-header" data-author={{this.author}}>
                                     <h2>{{this.title}}</h2>
                                     <div class="comment-menu">
                                         <div class="commentheader-date">Posted by {{this.author}} on {{this.formattedDate}} at {{this.formattedTime}}</div>
@@ -39,8 +39,8 @@
                     {{#unless this.comments}}
                         <div class="nocomment">Be the first to comment!</div>
                     {{/unless}}
-                    <button class="add-comment-button" id="add-comment-button">Comment</button>
                     <button type="submit" class="button edit hide" id="send-it">Update</button>
+                    <button class="add-comment-button" id="add-comment-button">Comment</button>
                     <div class="new-form">
                         <form id="new-comment-form">
                             <div>
