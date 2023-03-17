@@ -98,13 +98,17 @@ editCommentButtons.forEach( button => {
             const editTitleBox = document.createElement("input");
             const editContentBox = document.createElement("textarea");
             editContentBox.classList.add("edit-content");
-            document.querySelector("#add-comment-button").classList.toggle("hide");
-            document.querySelector("#send-it").classList.toggle("hide");
             const closeEdit = document.createElement("div");
+            const acceptEdit = document.createElement("div");
 
             closeEdit.textContent = "❌";
             closeEdit.classList.add("cursor");
             closeEdit.style.fontSize = "20px";
+            acceptEdit.textContent = "Update";
+            acceptEdit.classList.add("cursor");
+            acceptEdit.classList.add("green-update");
+            acceptEdit.style.fontSize = "12px";
+            acceptEdit.id = "send-it";
 
             commentTitleBox.textContent = "";
             commentContentBox.textContent = "";
@@ -112,6 +116,7 @@ editCommentButtons.forEach( button => {
             editTitleBox.value = `${commentTitle}`
             commentTitleBox.appendChild(editTitleBox);
             commentTitleBox.appendChild(closeEdit);
+            commentTitleBox.appendChild(acceptEdit);
 
             editContentBox.value = `${commentContent}`
             commentContentBox.appendChild(editContentBox);
@@ -120,20 +125,16 @@ editCommentButtons.forEach( button => {
                 Window.isEditing = false;
                 commentTitleBox.textContent = titlePlaceholder;
                 commentContentBox.textContent = contentPlaceholder;
-                // commentTitleBox.removeChild(editTitleBox);
-                // commentTitleBox.removeChild(closeEdit);
-                // commentContentBox.removeChild(editContentBox);
-                document.querySelector("#add-comment-button").classList.toggle("hide");
-                document.querySelector("#send-it").classList.toggle("hide");
             })
 
             document.querySelector("#send-it").addEventListener("click", async (event) => {
                 event.preventDefault();
+
                 try{
                     const newCommentObj = {
                         title: editTitleBox.value,
                         content: editContentBox.value,
-                        id: 21
+                        id: event.target.parentNode.parentNode.parentNode.dataset.id
                     }
 
                     const result = await fetch (`/blogs/comments/update/`, {
@@ -151,9 +152,7 @@ editCommentButtons.forEach( button => {
                     if(result.ok){
                         Window.isEditing = false;
                         commentTitleBox.textContent = newCommentObj.title;
-                        commentContentBox.textContent = newCommentObj.content;
-                        document.querySelector("#add-comment-button").classList.toggle("hide");
-                        document.querySelector("#send-it").classList.toggle("hide");                   
+                        commentContentBox.textContent = newCommentObj.content;                 
                     }
 
                 } catch (error) {
