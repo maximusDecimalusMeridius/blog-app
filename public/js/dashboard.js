@@ -55,86 +55,89 @@ addBlogButton.addEventListener("click", () => {
     }
 })
 
-editCommentButtons.forEach( button => {
-    button.addEventListener("click", (event) => {
-        if(Window.isEditing != true && localStorage.getItem("userId") === event.target.parentNode.parentNode.dataset.author){
+// editBlogButtons.forEach( button => {
+//     button.addEventListener("click", (event) => {
+//         // if(Window.isEditing != true && localStorage.getItem("userId") === event.target.parentNode.parentNode.dataset.author){
         
-            Window.isEditing = true;
+//             // Window.isEditing = true;
 
-            const blogTitleBox = event.target.parentNode.parentNode.firstElementChild
-            const blogTitle = event.target.parentNode.parentNode.firstElementChild.textContent;
-            const blogContentBox = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1];
-            const blogContent = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1].textContent;
+//             const blogTitleBox = event.target.parentNode.parentNode.firstElementChild
+//             const blogTitle = event.target.parentNode.parentNode.firstElementChild.textContent.trim();
+//             const blogContentBox = event.target.parentNode.parentNode.nextElementSibling;
+//             const blogContent = event.target.parentNode.parentNode.nextElementSibling.textContent.trim();
 
-            const titlePlaceholder = blogTitle;
-            const contentPlaceholder = blogContent;
+//             console.log(blogTitle)
+//             console.log(blogContent)
 
-            const editBlogTitleBox = document.createElement("input");
-            const editBlogContentBox = document.createElement("textarea");
-            editBlogContentBox.classList.add("edit-content");
-            const closeEdit = document.createElement("div");
-            const acceptEdit = document.createElement("div");
+//             const titlePlaceholder = blogTitle;
+//             const contentPlaceholder = blogContent;
 
-            closeEdit.textContent = "❌";
-            closeEdit.classList.add("cursor");
-            closeEdit.style.fontSize = "20px";
-            acceptEdit.textContent = "Update";
-            acceptEdit.classList.add("cursor");
-            acceptEdit.classList.add("green-update");
-            acceptEdit.style.fontSize = "12px";
+//             const editBlogTitleBox = document.createElement("input");
+//             const editBlogContentBox = document.createElement("textarea");
+//             // editBlogContentBox.classList.add("edit-content");
+//             const closeEdit = document.createElement("div");
+//             const acceptEdit = document.createElement("div");
 
-            blogTitleBox.textContent = "";
-            blogContentBox.textContent = "";
+//             closeEdit.textContent = "❌";
+//             closeEdit.classList.add("cursor");
+//             closeEdit.style.fontSize = "20px";
+//             acceptEdit.textContent = "Update";
+//             acceptEdit.classList.add("cursor");
+//             acceptEdit.classList.add("green-update");
+//             acceptEdit.style.fontSize = "12px";
 
-            editBlogTitleBox.value = `${blogTitle}`
-            commentBlogTitleBox.appendChild(editBlogTitleBox);
-            commentBlogTitleBox.appendChild(closeEdit);
-            commentBlogTitleBox.appendChild(acceptEdit);
+//             blogTitleBox.textContent = "";
+//             blogContentBox.textContent = "";
 
-            editBlogContentBox.value = `${blogContent}`
-            commentBlogContentBox.appendChild(editBlogContentBox);
+//             editBlogTitleBox.value = titlePlaceholder;
+//             blogTitleBox.appendChild(editBlogTitleBox);
+//             editBlogContentBox.value = contentPlaceholder;
+//             blogContentBox.appendChild(editBlogContentBox);
 
-            closeEdit.addEventListener("click", () => {
-                Window.isEditing = false;
-            blogTitleBox.textContent = titlePlaceholder;
-            blogContentBox.textContent = contentPlaceholder;
-            })
 
-            acceptEdit.addEventListener("click", async (event) => {
-                event.preventDefault();
 
-                // try{
-                //     const newCommentObj = {
-                //         title: editBlogTitleBox.value,
-                //         content: editBlogContentBox.value,
-                //         id: event.target.parentNode.parentNode.parentNode.dataset.id
-                //     }
 
-                //     const result = await fetch (`/blogs/comments/update/`, {
-                //         method: "PUT",
-                //         headers: {
-                //             "Content-Type":"application/json"
-                //         },
-                //         body: JSON.stringify(newCommentObj)
-                //     })
+//             closeEdit.addEventListener("click", () => {
+//                 Window.isEditing = false;
+//                 blogTitleBox.textContent = titlePlaceholder;
+//                 blogContentBox.textContent = contentPlaceholder;
+//             })
 
-                //     const data = await result.json();
+//             acceptEdit.addEventListener("click", async (event) => {
+//                 event.preventDefault();
 
-                //     console.log(data);
+//                 // try{
+//                 //     const newCommentObj = {
+//                 //         title: editBlogTitleBox.value,
+//                 //         content: editBlogContentBox.value,
+//                 //         id: event.target.parentNode.parentNode.parentNode.dataset.id
+//                 //     }
 
-                //     if(result.ok){
-                //         Window.isEditing = false;
-                //         commentTitleBox.textContent = newCommentObj.title;
-                //         commentContentBox.textContent = newCommentObj.content;                 
-                //     }
+//                 //     const result = await fetch (`/blogs/comments/update/`, {
+//                 //         method: "PUT",
+//                 //         headers: {
+//                 //             "Content-Type":"application/json"
+//                 //         },
+//                 //         body: JSON.stringify(newCommentObj)
+//                 //     })
 
-                // } catch (error) {
-                //     console.error(error);
-                // }
-            })
-        }
-    })
-})
+//                 //     const data = await result.json();
+
+//                 //     console.log(data);
+
+//                 //     if(result.ok){
+//                 //         Window.isEditing = false;
+//                 //         commentTitleBox.textContent = newCommentObj.title;
+//                 //         commentContentBox.textContent = newCommentObj.content;                 
+//                 //     }
+
+//                 // } catch (error) {
+//                 //     console.error(error);
+//                 // }
+//             })
+//         // }
+//     })
+// })
 
 deleteBlogButtons.forEach( blog => {
     blog.addEventListener("click", async (event) => {
