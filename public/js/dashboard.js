@@ -55,7 +55,86 @@ addBlogButton.addEventListener("click", () => {
     }
 })
 
-//TODO: Edit blog listener
+editCommentButtons.forEach( button => {
+    button.addEventListener("click", (event) => {
+        if(Window.isEditing != true && localStorage.getItem("userId") === event.target.parentNode.parentNode.dataset.author){
+        
+            Window.isEditing = true;
+
+            const blogTitleBox = event.target.parentNode.parentNode.firstElementChild
+            const blogTitle = event.target.parentNode.parentNode.firstElementChild.textContent;
+            const blogContentBox = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1];
+            const blogContent = event.target.parentNode.parentNode.parentNode.lastElementChild.childNodes[1].textContent;
+
+            const titlePlaceholder = blogTitle;
+            const contentPlaceholder = blogContent;
+
+            const editBlogTitleBox = document.createElement("input");
+            const editBlogContentBox = document.createElement("textarea");
+            editBlogContentBox.classList.add("edit-content");
+            const closeEdit = document.createElement("div");
+            const acceptEdit = document.createElement("div");
+
+            closeEdit.textContent = "❌";
+            closeEdit.classList.add("cursor");
+            closeEdit.style.fontSize = "20px";
+            acceptEdit.textContent = "Update";
+            acceptEdit.classList.add("cursor");
+            acceptEdit.classList.add("green-update");
+            acceptEdit.style.fontSize = "12px";
+
+            blogTitleBox.textContent = "";
+            blogContentBox.textContent = "";
+
+            editBlogTitleBox.value = `${blogTitle}`
+            commentBlogTitleBox.appendChild(editBlogTitleBox);
+            commentBlogTitleBox.appendChild(closeEdit);
+            commentBlogTitleBox.appendChild(acceptEdit);
+
+            editBlogContentBox.value = `${blogContent}`
+            commentBlogContentBox.appendChild(editBlogContentBox);
+
+            closeEdit.addEventListener("click", () => {
+                Window.isEditing = false;
+            blogTitleBox.textContent = titlePlaceholder;
+            blogContentBox.textContent = contentPlaceholder;
+            })
+
+            acceptEdit.addEventListener("click", async (event) => {
+                event.preventDefault();
+
+                // try{
+                //     const newCommentObj = {
+                //         title: editBlogTitleBox.value,
+                //         content: editBlogContentBox.value,
+                //         id: event.target.parentNode.parentNode.parentNode.dataset.id
+                //     }
+
+                //     const result = await fetch (`/blogs/comments/update/`, {
+                //         method: "PUT",
+                //         headers: {
+                //             "Content-Type":"application/json"
+                //         },
+                //         body: JSON.stringify(newCommentObj)
+                //     })
+
+                //     const data = await result.json();
+
+                //     console.log(data);
+
+                //     if(result.ok){
+                //         Window.isEditing = false;
+                //         commentTitleBox.textContent = newCommentObj.title;
+                //         commentContentBox.textContent = newCommentObj.content;                 
+                //     }
+
+                // } catch (error) {
+                //     console.error(error);
+                // }
+            })
+        }
+    })
+})
 
 deleteBlogButtons.forEach( blog => {
     blog.addEventListener("click", async (event) => {
@@ -83,7 +162,7 @@ addCommentButtons.forEach( comment => {
 
 editCommentButtons.forEach( button => {
     button.addEventListener("click", (event) => {
-        if(Window.isEditing != true){
+        if(Window.isEditing != true && localStorage.getItem("userId") === event.target.parentNode.parentNode.dataset.author){
         
             Window.isEditing = true;
 
@@ -108,7 +187,6 @@ editCommentButtons.forEach( button => {
             acceptEdit.classList.add("cursor");
             acceptEdit.classList.add("green-update");
             acceptEdit.style.fontSize = "12px";
-            acceptEdit.id = "send-it";
 
             commentTitleBox.textContent = "";
             commentContentBox.textContent = "";
@@ -127,7 +205,7 @@ editCommentButtons.forEach( button => {
                 commentContentBox.textContent = contentPlaceholder;
             })
 
-            document.querySelector("#send-it").addEventListener("click", async (event) => {
+            acceptEdit.addEventListener("click", async (event) => {
                 event.preventDefault();
 
                 try{
